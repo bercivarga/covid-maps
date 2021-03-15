@@ -1,1 +1,13 @@
+.App {
+	margin: 0;
+	padding: 0 1.5rem;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 
+svg {
+	display: inline-block;
+	vertical-align: middle;
+}
