@@ -14,7 +14,7 @@ function App() {
 	const { countries } = useGlobalContext();
 	return (
 		<div className="App">
-			<ReactTooltip>{content}</ReactTooltip>
+			<ReactTooltip multiline={true}>{content}</ReactTooltip>
 			<ComposableMap data-tip="" projectionConfig={{ scale: 150 }}>
 				<ZoomableGroup>
 					<Geographies geography={geoUrl}>
@@ -38,7 +38,12 @@ function App() {
 										});
 
 										setContent(
-											`${NAME} - New cases: ${newConfirmed.toLocaleString()} - Total cases: ${totalConfirmed.toLocaleString()} - Total deaths: ${totalDeaths.toLocaleString()}`
+											<p>
+												<strong>{NAME}</strong>
+												<br />New cases: {newConfirmed.toLocaleString()}
+												<br />Total cases: {totalConfirmed.toLocaleString()}
+												<br />Total deaths: {totalDeaths.toLocaleString()}
+											</p>
 										);
 									}}
 									onMouseLeave={() => {
