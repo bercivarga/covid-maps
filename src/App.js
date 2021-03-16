@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import ReactTooltip from 'react-tooltip';
+import { useGlobalContext } from './context';
 
 import './App.css';
 
@@ -10,7 +11,7 @@ const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-map
 
 function App() {
 	const [ content, setContent ] = useState('');
-
+	const { countries } = useGlobalContext();
 	return (
 		<div className="App">
 			<ReactTooltip>{content}</ReactTooltip>
@@ -24,7 +25,21 @@ function App() {
 									geography={geo}
 									onMouseEnter={() => {
 										const { NAME } = geo.properties;
-										setContent(`${NAME}`);
+										let newConfirmed = 0;
+										let totalConfirmed = 0;
+										let totalDeaths = 0;
+
+										countries.forEach((country) => {
+											if (country['Country'] === NAME) {
+												newConfirmed = country['NewConfirmed'];
+												totalConfirmed = country['TotalConfirmed'];
+												totalDeaths = country['TotalDeaths'];
+											}
+										});
+
+										setContent(
+											`${NAME} - New cases: ${newConfirmed.toLocaleString()} - Total cases: ${totalConfirmed.toLocaleString()} - Total deaths: ${totalDeaths.toLocaleString()}`
+										);
 									}}
 									onMouseLeave={() => {
 										setContent('');
