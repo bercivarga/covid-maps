@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import ReactTooltip from 'react-tooltip';
 import { useGlobalContext } from './context';
@@ -15,7 +15,13 @@ function App() {
 	return (
 		<div className="App">
 			<ReactTooltip multiline={true}>{content}</ReactTooltip>
-			<ComposableMap data-tip="" projectionConfig={{ scale: 150 }}>
+			<ComposableMap
+				data-tip=""
+				width={800}
+				height={600}
+				projectionConfig={{ scale: 155 }}
+				projection="geoEqualEarth"
+			>
 				<ZoomableGroup>
 					<Geographies geography={geoUrl}>
 						{({ geographies }) =>
@@ -40,9 +46,12 @@ function App() {
 										setContent(
 											<p>
 												<strong>{NAME}</strong>
-												<br />New cases: {newConfirmed.toLocaleString()}
-												<br />Total cases: {totalConfirmed.toLocaleString()}
-												<br />Total deaths: {totalDeaths.toLocaleString()}
+												<br />New cases:{' '}
+												{newConfirmed ? newConfirmed.toLocaleString() : 'No data'}
+												<br />Total cases:{' '}
+												{totalConfirmed ? totalConfirmed.toLocaleString() : 'No data'}
+												<br />Total deaths:{' '}
+												{totalDeaths ? totalDeaths.toLocaleString() : 'No data'}
 											</p>
 										);
 									}}
@@ -55,7 +64,7 @@ function App() {
 											outline: 'none'
 										},
 										hover: {
-											fill: '#F53',
+											fill: '#052d4a',
 											outline: 'none'
 										},
 										pressed: {
@@ -72,4 +81,4 @@ function App() {
 	);
 }
 
-export default App;
+export default memo(App);
